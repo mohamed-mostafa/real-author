@@ -95,7 +95,7 @@ export class AuthenticationService {
                   "You have successfully logged in as an " +
                     // user.role +
                     role +
-                    " user to Authorship. Now you can start to explore. Enjoy! 🎉",
+                    " user to RealAuthor. Now you can start to explore. Enjoy! 🎉",
                   "👋 Welcome, " + user.user.firstName + "!",
                   { toastClass: "toast ngx-toastr", closeButton: true }
                 );

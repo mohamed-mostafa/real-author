@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  authorship-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: authorship-web
+    container_name: authorship-web
+    ports:
+      - 4200:4200
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
