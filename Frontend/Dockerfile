@@ -7,6 +7,5 @@ FROM node:10-slim
 COPY . /usr/src/app
 COPY --from=builder /usr/src/app /usr/src/app
 WORKDIR /usr/src/app
-RUN npm run build:prod
 EXPOSE 4200
-CMD [ "node", "server.js" ]
+CMD [ "npm", "start" ]
