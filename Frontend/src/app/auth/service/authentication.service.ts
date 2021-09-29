@@ -61,36 +61,54 @@ export class AuthenticationService {
    * @returns user
    */
   login(email: string, password: string) {
-    return this._http
-      .post<any>(`${environment.apiUrl}/auth/local/login`, {
-        username: email,
-        password,
-      })
-      .pipe(
-        map((user) => {
-          // login successful if there's a jwt token in the response
-          if (user && user.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem("currentUser", JSON.stringify(user));
-
-            // Display welcome toast!
-            setTimeout(() => {
-              this._toastrService.success(
-                "You have successfully logged in as an " +
-                  user.role +
-                  " user to Vuexy. Now you can start to explore. Enjoy! 🎉",
-                "👋 Welcome, " + user.firstName + "!",
-                { toastClass: "toast ngx-toastr", closeButton: true }
-              );
-            }, 2500);
-
-            // notify
-            this.currentUserSubject.next(user);
-          }
-
-          return user;
+    return (
+      this._http
+        // .post<any>(`${environment.apiUrl}/users/authenticate`, {
+        // .post<any>(`${environment.apiUrl}/auth/local/login`, {
+        .post<any>(`https://backend.realauthor.com/auth/local/login`, {
+          username: email,
+          // email,
+          password,
         })
-      );
+        .pipe(
+          map((user) => {
+            // login successful if there's a jwt token in the response
+
+            if (user && user.token) {
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
+              // localStorage.setItem("currentUser", JSON.stringify(user));
+              const role = user.user.roles[0] == "admin" ? "Admin" : "User";
+              const obj: any = {
+                token: user.token,
+                avatar: "avatar-s-11.jpg",
+                email: user.user.email,
+                firstName: user.user.firstName,
+                id: user.user._id,
+                lastName: user.user.lastName,
+                role,
+              };
+              localStorage.setItem("currentUser", JSON.stringify(obj));
+
+              // Display welcome toast!
+              setTimeout(() => {
+                this._toastrService.success(
+                  "You have successfully logged in as an " +
+                    // user.role +
+                    role +
+                    " user to Authorship. Now you can start to explore. Enjoy! 🎉",
+                  "👋 Welcome, " + user.user.firstName + "!",
+                  { toastClass: "toast ngx-toastr", closeButton: true }
+                );
+              }, 2500);
+
+              // notify
+              this.currentUserSubject.next(obj);
+            }
+
+            return user;
+          })
+        )
+    );
   }
 
   /**
