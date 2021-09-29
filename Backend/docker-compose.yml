@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  authorship-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: authorship-api
+    ports:
+      - 8081:8081
+    container_name: authorship-api
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

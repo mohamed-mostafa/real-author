@@ -1,0 +1,10 @@
+[
+    {
+        "roles": ["admin"],
+        "firstName": "Admin",
+        "lastName": "Admin",
+        "email": "admin@admin.com",
+        "mobile": "+201124110722",
+        "password": "1234567r"
+    }
+]
