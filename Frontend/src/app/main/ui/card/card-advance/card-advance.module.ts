@@ -1,26 +1,26 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { NgApexchartsModule } from "ng-apexcharts";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { CoreCommonModule } from '@core/common.module';
-import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { CoreCommonModule } from "@core/common.module";
+import { ContentHeaderModule } from "app/layout/components/content-header/content-header.module";
 
-import { CardAdvanceService } from 'app/main/ui/card/card-advance/card-advance.service';
-import { CardAdvanceComponent } from 'app/main/ui/card/card-advance/card-advance.component';
+import { CardAdvanceService } from "app/main/ui/card/card-advance/card-advance.service";
+import { CardAdvanceComponent } from "app/main/ui/card/card-advance/card-advance.component";
 
 // routing
 const routes: Routes = [
   {
-    path: 'card/advance',
+    path: "researches",
     component: CardAdvanceComponent,
     resolve: {
-      chatWidget: CardAdvanceService
+      chatWidget: CardAdvanceService,
     },
-    data: { animation: 'advance' }
-  }
+    data: { animation: "researches" },
+  },
 ];
 
 @NgModule({
@@ -31,8 +31,8 @@ const routes: Routes = [
     PerfectScrollbarModule,
     CoreCommonModule,
     NgApexchartsModule,
-    NgbModule
+    NgbModule,
   ],
-  providers: [CardAdvanceService]
+  providers: [CardAdvanceService],
 })
 export class CardAdvanceModule {}

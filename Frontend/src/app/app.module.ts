@@ -93,7 +93,7 @@ const appRoutes: Routes = [
   },
   {
     path: "",
-    redirectTo: "/ui/card/advance",
+    redirectTo: "/ui/researches",
     pathMatch: "full",
   },
   {

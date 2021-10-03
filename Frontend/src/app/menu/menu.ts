@@ -7,7 +7,7 @@ export const menu: CoreMenu[] = [
     translate: "MENU.RESEARCHES",
     type: "item",
     icon: "book-open",
-    url: "ui/card/advance",
+    url: "ui/researches",
   },
   {
     id: "profile",
@@ -568,7 +568,7 @@ export const menu: CoreMenu[] = [
   //           translate: "MENU.UI.CARDS.ADVANCE",
   //           type: "item",
   //           icon: "circle",
-  //           url: "ui/card/advance",
+  //           url: "ui/researches",
   //         },
   //         {
   //           id: "card-statistics",
