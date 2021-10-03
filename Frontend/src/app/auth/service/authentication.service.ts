@@ -64,8 +64,8 @@ export class AuthenticationService {
     return (
       this._http
         // .post<any>(`${environment.apiUrl}/users/authenticate`, {
-        // .post<any>(`${environment.apiUrl}/auth/local/login`, {
-        .post<any>(`https://backend.realauthor.com/auth/local/login`, {
+        .post<any>(`${environment.apiUrl}/auth/local/login`, {
+          // .post<any>(`https://backend.realauthor.com/auth/local/login`, {
           username: email,
           // email,
           password,

@@ -18,11 +18,11 @@ export const coreConfig: CoreConfig = {
   app: {
     appName     : 'RealAuthor',                                        // App Name
     appTitle    : 'RealAuthor', // App Title
-    appLogoImage: 'assets/images/logo/logo.svg',                  // App Logo
+    appLogoImage: 'assets/images/logo/logo2.png',                  // App Logo
     appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
   },
   layout: {
-    skin  : 'default',                        // default, dark, bordered, semi-dark
+    skin  : 'semi-dark',                        // default, dark, bordered, semi-dark
     type  : 'vertical',                       // vertical, horizontal
     animation : 'fadeIn',                     // fadeInLeft, zoomIn , fadeIn, none
     menu : {
