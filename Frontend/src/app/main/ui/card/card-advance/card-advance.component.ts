@@ -17,7 +17,6 @@ export class CardAdvanceComponent implements OnInit {
   getAllResearches(): any {
     this.researchesService.getAllResearches().subscribe((result) => {
       this.allResearches = result;
-      console.log(this.allResearches);
     });
   }
 }

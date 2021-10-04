@@ -13,6 +13,7 @@
     "bundle-analyzer": "webpack-bundle-analyzer dist/vuexy/stats.json",
     "test": "ng test",
     "lint": "ng lint",
+    "mserve":"set NODE_OPTIONS=--max_old_space_size=8192 & ng serve --open",
     "e2e": "ng e2e"
   },
   "private": true,
