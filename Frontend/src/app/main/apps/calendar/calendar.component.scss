@@ -1,9 +1,9 @@
-@import '@core/scss/base/pages/app-calendar.scss';
-@import '@core/scss/angular/libs/flatpickr.component.scss';
-@import '@core/scss/angular/libs/select.component.scss';
+@import "@core/scss/base/pages/app-calendar.scss";
+@import "@core/scss/angular/libs/flatpickr.component.scss";
+@import "@core/scss/angular/libs/select.component.scss";
 
-@import '@core/scss/base/bootstrap-extended/include.scss'; // Bootstrap includes
-@import '~@fullcalendar/daygrid/main.css';
+@import "@core/scss/base/bootstrap-extended/include.scss"; // Bootstrap includes
+@import "~@fullcalendar/daygrid/main.css";
 
 //  Main Sidebar
 app-calendar-main-sidebar {
@@ -14,7 +14,11 @@ app-calendar-main-sidebar {
 
 // Sidebar Toggle Button
 .fc-sidebarToggle-button {
-  background-image: url(str-replace(str-replace($menu, 'currentColor', $body-color), '#', '%23'));
+  background-image: url(str-replace(
+    str-replace($menu, "currentColor", $body-color),
+    "#",
+    "%23"
+  ));
   width: 24px;
   height: 24px;
   margin-right: 0.7rem !important;
@@ -50,4 +54,11 @@ app-calendar-main-sidebar {
 // ! Fix: fixed chrome bug
 .fc-scrollgrid-section-liquid {
   height: 1px !important;
+}
+.center {
+  right: 50%;
+  bottom: 50%;
+  transform: translate(50%, 50%);
+  position: absolute;
+  border: 0px !important;
 }

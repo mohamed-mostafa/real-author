@@ -1,59 +1,63 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
+import { UsersService } from "./../../../../services/users.service";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
-import { CoreConfigService } from '@core/services/config.service';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
+import { CoreConfigService } from "@core/services/config.service";
+import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
 
-import { UserListService } from 'app/main/apps/user/user-list/user-list.service';
+import { UserListService } from "app/main/apps/user/user-list/user-list.service";
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-user-list",
+  templateUrl: "./user-list.component.html",
+  styleUrls: ["./user-list.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UserListComponent implements OnInit {
   // Public
+  public allUsers = [];
   public sidebarToggleRef = false;
   public rows;
   public selectedOption = 10;
   public ColumnMode = ColumnMode;
   public temp = [];
-  public previousRoleFilter = '';
-  public previousPlanFilter = '';
-  public previousStatusFilter = '';
+  public previousRoleFilter = "";
+  public previousPlanFilter = "";
+  public loading = false;
+  public error = "";
+  public previousStatusFilter = "";
 
   public selectRole: any = [
-    { name: 'All', value: '' },
-    { name: 'Admin', value: 'Admin' },
-    { name: 'Author', value: 'Author' },
-    { name: 'Editor', value: 'Editor' },
-    { name: 'Maintainer', value: 'Maintainer' },
-    { name: 'Subscriber', value: 'Subscriber' }
+    { name: "All", value: "" },
+    { name: "Admin", value: "Admin" },
+    { name: "Author", value: "Author" },
+    { name: "Editor", value: "Editor" },
+    { name: "Maintainer", value: "Maintainer" },
+    { name: "Subscriber", value: "Subscriber" },
   ];
 
   public selectPlan: any = [
-    { name: 'All', value: '' },
-    { name: 'Basic', value: 'Basic' },
-    { name: 'Company', value: 'Company' },
-    { name: 'Enterprise', value: 'Enterprise' },
-    { name: 'Team', value: 'Team' }
+    { name: "All", value: "" },
+    { name: "Basic", value: "Basic" },
+    { name: "Company", value: "Company" },
+    { name: "Enterprise", value: "Enterprise" },
+    { name: "Team", value: "Team" },
   ];
 
   public selectStatus: any = [
-    { name: 'All', value: '' },
-    { name: 'Pending', value: 'Pending' },
-    { name: 'Active', value: 'Active' },
-    { name: 'Inactive', value: 'Inactive' }
+    { name: "All", value: "" },
+    { name: "Pending", value: "Pending" },
+    { name: "Active", value: "Active" },
+    { name: "Inactive", value: "Inactive" },
   ];
 
   public selectedRole = [];
   public selectedPlan = [];
   public selectedStatus = [];
-  public searchValue = '';
+  public searchValue = "";
 
   // Decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -72,6 +76,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private _userListService: UserListService,
     private _coreSidebarService: CoreSidebarService,
+    private userService: UsersService,
     private _coreConfigService: CoreConfigService
   ) {
     this._unsubscribeAll = new Subject();
@@ -119,9 +124,13 @@ export class UserListComponent implements OnInit {
    * @param event
    */
   filterByRole(event) {
-    const filter = event ? event.value : '';
+    const filter = event ? event.value : "";
     this.previousRoleFilter = filter;
-    this.temp = this.filterRows(filter, this.previousPlanFilter, this.previousStatusFilter);
+    this.temp = this.filterRows(
+      filter,
+      this.previousPlanFilter,
+      this.previousStatusFilter
+    );
     this.rows = this.temp;
   }
 
@@ -131,9 +140,13 @@ export class UserListComponent implements OnInit {
    * @param event
    */
   filterByPlan(event) {
-    const filter = event ? event.value : '';
+    const filter = event ? event.value : "";
     this.previousPlanFilter = filter;
-    this.temp = this.filterRows(this.previousRoleFilter, filter, this.previousStatusFilter);
+    this.temp = this.filterRows(
+      this.previousRoleFilter,
+      filter,
+      this.previousStatusFilter
+    );
     this.rows = this.temp;
   }
 
@@ -143,9 +156,13 @@ export class UserListComponent implements OnInit {
    * @param event
    */
   filterByStatus(event) {
-    const filter = event ? event.value : '';
+    const filter = event ? event.value : "";
     this.previousStatusFilter = filter;
-    this.temp = this.filterRows(this.previousRoleFilter, this.previousPlanFilter, filter);
+    this.temp = this.filterRows(
+      this.previousRoleFilter,
+      this.previousPlanFilter,
+      filter
+    );
     this.rows = this.temp;
   }
 
@@ -158,16 +175,19 @@ export class UserListComponent implements OnInit {
    */
   filterRows(roleFilter, planFilter, statusFilter): any[] {
     // Reset search on select change
-    this.searchValue = '';
+    this.searchValue = "";
 
     roleFilter = roleFilter.toLowerCase();
     planFilter = planFilter.toLowerCase();
     statusFilter = statusFilter.toLowerCase();
 
-    return this.tempData.filter(row => {
-      const isPartialNameMatch = row.role.toLowerCase().indexOf(roleFilter) !== -1 || !roleFilter;
-      const isPartialGenderMatch = row.currentPlan.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
-      const isPartialStatusMatch = row.status.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
+    return this.tempData.filter((row) => {
+      const isPartialNameMatch =
+        row.role.toLowerCase().indexOf(roleFilter) !== -1 || !roleFilter;
+      const isPartialGenderMatch =
+        row.currentPlan.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
+      const isPartialStatusMatch =
+        row.status.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
       return isPartialNameMatch && isPartialGenderMatch && isPartialStatusMatch;
     });
   }
@@ -179,22 +199,29 @@ export class UserListComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe config change
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
-      if (config.layout.animation === 'zoomIn') {
-        setTimeout(() => {
-          this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-            this.rows = response;
-            this.tempData = this.rows;
-          });
-        }, 450);
-      } else {
-        this._userListService.onUserListChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-          this.rows = response;
-          this.tempData = this.rows;
-        });
-      }
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
+        if (config.layout.animation === "zoomIn") {
+          setTimeout(() => {
+            this._userListService.onUserListChanged
+              .pipe(takeUntil(this._unsubscribeAll))
+              .subscribe((response) => {
+                this.rows = response;
+                this.tempData = this.rows;
+              });
+          }, 450);
+        } else {
+          this._userListService.onUserListChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((response) => {
+              this.rows = response;
+              this.tempData = this.rows;
+            });
+        }
+      });
+    // this.getAllUsers();
   }
 
   /**
@@ -204,5 +231,19 @@ export class UserListComponent implements OnInit {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+  getAllUsers(): any {
+    this.loading = true;
+    this.userService.getAllUsers().subscribe(
+      (result) => {
+        this.allUsers = result;
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.error = error;
+        this.loading = false;
+      }
+    );
   }
 }

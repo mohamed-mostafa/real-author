@@ -51,12 +51,12 @@ export const menu: CoreMenu[] = [
     ],
   },
   {
-    id: "faq",
+    id: "calendar",
     title: "History",
     translate: "MENU.HISTORY",
     type: "item",
     icon: "file-text",
-    url: "pages/faq",
+    url: "apps/calendar",
   },
   // // // Dashboard
   // {

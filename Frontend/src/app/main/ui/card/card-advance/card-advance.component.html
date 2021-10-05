@@ -2,61 +2,78 @@
   <div class="content-body">
     <!-- <app-content-header [contentHeader]="contentHeader"></app-content-header> -->
     <h3>Researches</h3>
-    <div class="row match-height">
-      <div *ngFor="let item of allResearches" class="col-lg-4 col-md-6 col-12">
-        <div class="card card-developer-meetup">
-          <div class="bg-light-primary rounded-top text-center">
-            <img
-              src="assets/images/illustration/email.svg"
-              alt="Meeting Pic"
-              height="170"
-            />
-          </div>
-          <div class="card-body">
-            <div class="meetup-header d-flex align-items-center">
-              <div class="meetup-day">
-                <h3 class="mb-0">{{ item.created_at | date }}</h3>
-              </div>
-              <div class="my-auto">
-                <h4 class="card-title mb-25">{{ item.name }}</h4>
-                <p class="card-text mb-0">{{ item.status }}</p>
-              </div>
+    <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+      <div class="alert-body">
+        <p>{{ error }}</p>
+      </div>
+    </ngb-alert>
+    <ng-container *ngIf="loading; else notLoading">
+      <div class="spinner-border mr-50" style="width: 5rem; height: 5rem">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-container>
+    <ng-template #notLoading>
+      <div class="row match-height">
+        <div
+          *ngFor="let item of allResearches"
+          class="col-lg-4 col-md-6 col-12"
+        >
+          <div class="card card-developer-meetup">
+            <div class="bg-light-primary rounded-top text-center">
+              <img
+                src="assets/images/illustration/email.svg"
+                alt="Meeting Pic"
+                height="170"
+              />
             </div>
-            <div class="media">
-              <div class="media-body">
-                <h6 class="mb-0">
-                  {{ item.abstract ? item.abstract : "No Abstract Found" }}
-                </h6>
-              </div>
-            </div>
-
-            <div class="avatar-group">
-              <ng-container
-                *ngIf="
-                  item.investigators && item.investigators.length > 0;
-                  else elseTemplate
-                "
-              >
-                <div
-                  *ngFor="let invest of item.investigators"
-                  placement="bottom"
-                  container="body"
-                  ngbTooltip="Investigators"
-                  class="avatar pull-up"
-                >
-                  <img
-                    src="assets/images/portrait/small/default.jpg"
-                    alt="Avatar"
-                    width="33"
-                    height="33"
-                  />
+            <div class="card-body">
+              <div class="meetup-header d-flex align-items-center">
+                <div class="meetup-day">
+                  <h3 class="mb-0">{{ item.created_at | date }}</h3>
                 </div>
-              </ng-container>
-              <ng-template #elseTemplate> No Investigators Found </ng-template>
+                <div class="my-auto">
+                  <h4 class="card-title mb-25">{{ item.name }}</h4>
+                  <p class="card-text mb-0">{{ item.status }}</p>
+                </div>
+              </div>
+              <div class="media">
+                <div class="media-body">
+                  <h6 class="mb-0">
+                    {{ item.abstract ? item.abstract : "No Abstract Found" }}
+                  </h6>
+                </div>
+              </div>
+
+              <div class="avatar-group">
+                <ng-container
+                  *ngIf="
+                    item.investigators && item.investigators.length > 0;
+                    else elseTemplate
+                  "
+                >
+                  <div
+                    *ngFor="let invest of item.investigators"
+                    placement="bottom"
+                    container="body"
+                    ngbTooltip="Investigators"
+                    class="avatar pull-up"
+                  >
+                    <img
+                      src="assets/images/portrait/small/default.jpg"
+                      alt="Avatar"
+                      width="33"
+                      height="33"
+                    />
+                  </div>
+                </ng-container>
+                <ng-template #elseTemplate>
+                  No Investigators Found
+                </ng-template>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>
