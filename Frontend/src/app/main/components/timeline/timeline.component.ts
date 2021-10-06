@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HistoryService } from "./../../../services/history.service";
 import * as snippet from 'app/main/components/timeline/timeline.snippetcode';
 
 @Component({
@@ -15,8 +16,14 @@ export class TimelineComponent implements OnInit {
   // snippet code variables
   public _snippetCodeBasic = snippet.snippetCodeBasic;
   public _snippetCodeIcons = snippet.snippetCodeIcons;
+  
+  public loading: boolean;
+  public allHistoryItems:any[];
+  public error: any;
 
-  constructor() {}
+  constructor(private historyService: HistoryService) {
+    
+  }
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
@@ -49,5 +56,34 @@ export class TimelineComponent implements OnInit {
         ]
       }
     };
+    this.getAllHistories();
+  }
+
+  getAllHistories(): any {
+    this.loading = true;
+    this.allHistoryItems = [];
+    this.historyService.getAllHistories().subscribe(
+      (result) => {
+        // this.allHistoryItems = result;
+        for (const element of result) {
+          
+          const historyStatementSplit = element.record.replace('updated Research', ",").replace('created Research', ',').replace('added Research', ',').split(',');
+          const obj = {
+            id: element._id,
+            created_at: element.created_at,
+            record: element.record,
+            userName: historyStatementSplit[0],
+            testName: historyStatementSplit[1],
+          };
+          this.allHistoryItems.push(obj);
+        }
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.error = error;
+        this.loading = false;
+      }
+    );
   }
 }

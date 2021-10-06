@@ -56,7 +56,7 @@ export const menu: CoreMenu[] = [
     translate: "MENU.HISTORY",
     type: "item",
     icon: "file-text",
-    url: "apps/calendar",
+    url: "components/timeline",
   },
   // // // Dashboard
   // {
