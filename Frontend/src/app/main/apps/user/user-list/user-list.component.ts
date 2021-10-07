@@ -32,26 +32,13 @@ export class UserListComponent implements OnInit {
 
   public selectRole: any = [
     { name: "All", value: "" },
-    { name: "Admin", value: "Admin" },
-    { name: "Author", value: "Author" },
-    { name: "Editor", value: "Editor" },
-    { name: "Maintainer", value: "Maintainer" },
-    { name: "Subscriber", value: "Subscriber" },
+    { name: "Admin", value: "admin" },
+    { name: "User", value: "user" },
   ];
-
-  public selectPlan: any = [
-    { name: "All", value: "" },
-    { name: "Basic", value: "Basic" },
-    { name: "Company", value: "Company" },
-    { name: "Enterprise", value: "Enterprise" },
-    { name: "Team", value: "Team" },
-  ];
-
   public selectStatus: any = [
     { name: "All", value: "" },
+    { name: "Approved", value: "Approved" },
     { name: "Pending", value: "Pending" },
-    { name: "Active", value: "Active" },
-    { name: "Inactive", value: "Inactive" },
   ];
 
   public selectedRole = [];
@@ -93,14 +80,19 @@ export class UserListComponent implements OnInit {
   filterUpdate(event) {
     // Reset ng-select on search
     this.selectedRole = this.selectRole[0];
-    this.selectedPlan = this.selectPlan[0];
     this.selectedStatus = this.selectStatus[0];
 
     const val = event.target.value.toLowerCase();
 
     // Filter Our Data
-    const temp = this.tempData.filter(function (d) {
-      return d.fullName.toLowerCase().indexOf(val) !== -1 || !val;
+    const temp = this.allUsers.filter(function (d) {
+      return (
+        d.firstName.toLowerCase().indexOf(val) !== -1 ||
+        d.lastName.toLowerCase().indexOf(val) !== -1 ||
+        d.mobile.toLowerCase().indexOf(val) !== -1 ||
+        d.email.toLowerCase().indexOf(val) !== -1 ||
+        !val
+      );
     });
 
     // Update The Rows
@@ -129,22 +121,6 @@ export class UserListComponent implements OnInit {
     this.temp = this.filterRows(
       filter,
       this.previousPlanFilter,
-      this.previousStatusFilter
-    );
-    this.rows = this.temp;
-  }
-
-  /**
-   * Filter By Plan
-   *
-   * @param event
-   */
-  filterByPlan(event) {
-    const filter = event ? event.value : "";
-    this.previousPlanFilter = filter;
-    this.temp = this.filterRows(
-      this.previousRoleFilter,
-      filter,
       this.previousStatusFilter
     );
     this.rows = this.temp;
@@ -181,14 +157,15 @@ export class UserListComponent implements OnInit {
     planFilter = planFilter.toLowerCase();
     statusFilter = statusFilter.toLowerCase();
 
-    return this.tempData.filter((row) => {
+    return this.allUsers.filter((row) => {
       const isPartialNameMatch =
-        row.role.toLowerCase().indexOf(roleFilter) !== -1 || !roleFilter;
-      const isPartialGenderMatch =
-        row.currentPlan.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
+        row.roles[0].indexOf(roleFilter) !== -1 || !roleFilter;
+      // const isPartialGenderMatch =
+      //   row.currentPlan.toLowerCase().indexOf(planFilter) !== -1 || !planFilter;
       const isPartialStatusMatch =
-        row.status.toLowerCase().indexOf(statusFilter) !== -1 || !statusFilter;
-      return isPartialNameMatch && isPartialGenderMatch && isPartialStatusMatch;
+        row.appStatus.toLowerCase().indexOf(statusFilter) !== -1 ||
+        !statusFilter;
+      return isPartialNameMatch && isPartialStatusMatch;
     });
   }
 
@@ -199,29 +176,29 @@ export class UserListComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe config change
-    this._coreConfigService.config
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((config) => {
-        //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
-        if (config.layout.animation === "zoomIn") {
-          setTimeout(() => {
-            this._userListService.onUserListChanged
-              .pipe(takeUntil(this._unsubscribeAll))
-              .subscribe((response) => {
-                this.rows = response;
-                this.tempData = this.rows;
-              });
-          }, 450);
-        } else {
-          this._userListService.onUserListChanged
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((response) => {
-              this.rows = response;
-              this.tempData = this.rows;
-            });
-        }
-      });
-    // this.getAllUsers();
+    // this._coreConfigService.config
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe((config) => {
+    //     //! If we have zoomIn route Transition then load datatable after 450ms(Transition will finish in 400ms)
+    //     if (config.layout.animation === "zoomIn") {
+    //       setTimeout(() => {
+    //         this._userListService.onUserListChanged
+    //           .pipe(takeUntil(this._unsubscribeAll))
+    //           .subscribe((response) => {
+    //             this.rows = response;
+    //             this.tempData = this.rows;
+    //           });
+    //       }, 450);
+    //     } else {
+    //       this._userListService.onUserListChanged
+    //         .pipe(takeUntil(this._unsubscribeAll))
+    //         .subscribe((response) => {
+    //           this.rows = response;
+    //           this.tempData = this.rows;
+    //         });
+    //     }
+    //   });
+    this.getAllUsers();
   }
 
   /**
@@ -236,7 +213,10 @@ export class UserListComponent implements OnInit {
     this.loading = true;
     this.userService.getAllUsers().subscribe(
       (result) => {
+        this.rows = result;
         this.allUsers = result;
+        console.log(result);
+
         this.loading = false;
       },
       (error) => {

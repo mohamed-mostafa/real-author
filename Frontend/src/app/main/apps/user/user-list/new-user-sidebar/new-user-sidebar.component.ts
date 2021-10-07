@@ -1,21 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.service';
+import { takeUntil } from "rxjs/operators";
+import { Router, ActivatedRoute } from "@angular/router";
+import { UsersService } from "./../../../../../services/users.service";
+import { CoreConfigService } from "./../../../../../../@core/services/config.service";
+import { Subject } from "rxjs";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
 
 @Component({
-  selector: 'app-new-user-sidebar',
-  templateUrl: './new-user-sidebar.component.html'
+  selector: "app-new-user-sidebar",
+  templateUrl: "./new-user-sidebar.component.html",
 })
 export class NewUserSidebarComponent implements OnInit {
-  public fullname;
-  public username;
-  public email;
+  // Public
+  public coreConfig: any;
+  public passwordTextType: boolean;
+  public registerForm: FormGroup;
+  public submitted = false;
+  public loading = false;
+  public error = "";
+  public returnUrl: string;
 
+  // Private
+  private _unsubscribeAll: Subject<any>;
   /**
    * Constructor
    *
    * @param {CoreSidebarService} _coreSidebarService
+   * @param {CoreConfigService} _coreConfigService
+   * @param {FormBuilder} _formBuilder
    */
-  constructor(private _coreSidebarService: CoreSidebarService) {}
+  constructor(
+    private _coreSidebarService: CoreSidebarService,
+    private _coreConfigService: CoreConfigService,
+    private usersService: UsersService,
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+    private _route: ActivatedRoute,
+  ) {
+    this._unsubscribeAll = new Subject();
+  }
 
   /**
    * Toggle the sidebar
@@ -26,16 +50,101 @@ export class NewUserSidebarComponent implements OnInit {
     this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
   }
 
-  /**
-   * Submit
-   *
-   * @param form
-   */
-  submit(form) {
-    if (form.valid) {
-      this.toggleSidebar('new-user-sidebar');
-    }
+  get f() {
+    return this.registerForm.controls;
   }
 
-  ngOnInit(): void {}
+  /**
+   * Toggle password
+   */
+  togglePasswordTextType() {
+    this.passwordTextType = !this.passwordTextType;
+  }
+
+  /**
+   * On Submit
+   */
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    delete this.registerForm.value.confirmPassword;
+    this.usersService.register(this.registerForm.value).subscribe(
+      (data) => {
+        this.loading = false;
+      
+      },
+      (error) => {
+        this.error = error;
+        this.loading = false;
+      }
+    );
+  }
+
+  // Lifecycle Hooks
+  // -----------------------------------------------------------------------------------------------------
+
+  /**
+   * On init
+   */
+  ngOnInit(): void {
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this._route.snapshot.queryParams["returnUrl"] || "/";
+
+    this.registerForm = this._formBuilder.group(
+      {
+        firstName: ["", [Validators.required]],
+        lastName: ["", [Validators.required]],
+        email: ["", [Validators.required, Validators.email]],
+        password: ["", [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ["", [Validators.required, Validators.minLength(6)]],
+        mobile: ["", Validators.required],
+        title: ["", Validators.required],
+        city: ["", Validators.required],
+        state: ["", Validators.required],
+        address: ["", Validators.required],
+        zip: ["", Validators.required],
+      },
+      {
+        validator: this.MustMatch("password", "confirmPassword"),
+      }
+    );
+
+    // Subscribe to config changes
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
+  }
+  MustMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+        // return if another validator has already found an error on the matchingControl
+        return;
+      }
+
+      // set error on matchingControl if validation fails
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mustMatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
+  }
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 }

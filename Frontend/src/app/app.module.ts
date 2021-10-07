@@ -30,6 +30,7 @@ import { ContextMenuComponent } from "app/main/extensions/context-menu/context-m
 import { AnimatedCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/animated-custom-context-menu/animated-custom-context-menu.component";
 import { BasicCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/basic-custom-context-menu/basic-custom-context-menu.component";
 import { SubMenuCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/sub-menu-custom-context-menu/sub-menu-custom-context-menu.component";
+import { UserComponent } from "./user/user.component";
 
 const appRoutes: Routes = [
   {
@@ -96,6 +97,7 @@ const appRoutes: Routes = [
     redirectTo: "/ui/researches",
     pathMatch: "full",
   },
+  { path: "users", component: UserComponent },
   {
     path: "**",
     redirectTo: "/pages/miscellaneous/error", //Error 404 - Page not found
@@ -109,6 +111,7 @@ const appRoutes: Routes = [
     BasicCustomContextMenuComponent,
     AnimatedCustomContextMenuComponent,
     SubMenuCustomContextMenuComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
