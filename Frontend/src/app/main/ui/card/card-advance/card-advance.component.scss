@@ -1,2 +1,9 @@
-@import '@core/scss/base/plugins/charts/chart-apex.scss';
-@import '@core/scss/base/pages/app-chat-list.scss';
+@import "@core/scss/base/plugins/charts/chart-apex.scss";
+@import "@core/scss/base/pages/app-chat-list.scss";
+.addBtn {
+  float: right;
+  margin-top: -40px;
+}
+.showResearchDetails {
+  cursor: pointer;
+}

@@ -1,0 +1,58 @@
+<ng-container *ngIf="loading; else notLoading">
+  <div class="spinner-border mr-50" style="width: 5rem; height: 5rem">
+    <span class="sr-only">Loading...</span>
+  </div>
+</ng-container>
+<ng-template #notLoading>
+  <div class="card">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Rank</h4>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Updated</th>
+                  <th>Percentage</th>
+                  <th>Rank</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rank of allRanks">
+                  <td>{{ rank.firstName }} {{ rank.lastName }}</td>
+                  <td>
+                    {{ rank.researches.updated_at | date: "short" }}
+                  </td>
+                  <td>
+                    <div class="progress progress-bar-primary my-50">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        aria-valuenow="58"
+                        aria-valuemin="58"
+                        aria-valuemax="100"
+                        style="width: 100%"
+                      ></div>
+                    </div>
+                    {{ rank.researches.percentage }} %
+                  </td>
+                  <td>
+                    {{ rank.researches.rankStatus }}
+                  </td>
+                  <td>
+                    {{ rank.researches.score }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

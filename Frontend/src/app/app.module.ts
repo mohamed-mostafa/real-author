@@ -1,3 +1,4 @@
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
@@ -31,6 +32,11 @@ import { AnimatedCustomContextMenuComponent } from "./main/extensions/context-me
 import { BasicCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/basic-custom-context-menu/basic-custom-context-menu.component";
 import { SubMenuCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/sub-menu-custom-context-menu/sub-menu-custom-context-menu.component";
 import { UserComponent } from "./user/user.component";
+import { ResearchDetailsComponent } from "./research/research-details/research-details.component";
+import { ResearchInvestigatorsComponent } from './research/research-investigators/research-investigators.component';
+import { ResearchParametersComponent } from './research/research-parameters/research-parameters.component';
+import { ResearchRankComponent } from './research/research-rank/research-rank.component';
+import { ResearchGeneralComponent } from './research/research-general/research-general.component';
 
 const appRoutes: Routes = [
   {
@@ -98,6 +104,7 @@ const appRoutes: Routes = [
     pathMatch: "full",
   },
   { path: "users", component: UserComponent },
+  { path: "researchDetails", component: ResearchDetailsComponent },
   {
     path: "**",
     redirectTo: "/pages/miscellaneous/error", //Error 404 - Page not found
@@ -112,11 +119,17 @@ const appRoutes: Routes = [
     AnimatedCustomContextMenuComponent,
     SubMenuCustomContextMenuComponent,
     UserComponent,
+    ResearchDetailsComponent,
+    ResearchInvestigatorsComponent,
+    ResearchParametersComponent,
+    ResearchRankComponent,
+    ResearchGeneralComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxDatatableModule,
     HttpClientInMemoryWebApiModule.forRoot(FakeDbService, {
       delay: 0,
       passThruUnknownUrl: true,

@@ -215,8 +215,6 @@ export class UserListComponent implements OnInit {
       (result) => {
         this.rows = result;
         this.allUsers = result;
-        console.log(result);
-
         this.loading = false;
       },
       (error) => {

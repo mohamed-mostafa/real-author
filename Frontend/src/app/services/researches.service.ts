@@ -20,82 +20,57 @@ export class ResearchesService {
     });
   }
 
-  sendResearchesData(body: any) {
-    return this._httpClient.post(`${this.apiUrl}/${this.link}`, body, {
-      observe: "response",
-    });
+  addResearch(body: any) {
+    return this._httpClient.post(`${this.apiUrl}/${this.link}`, body);
   }
 
   UpdateResearchesData(body: any, researchId: string) {
     return this._httpClient.put(
       `${this.apiUrl}/${this.link}/${researchId}`,
-      body,
-      {
-        observe: "response",
-      }
+      body
     );
   }
 
   getSingleResearch(researchId) {
-    return this._httpClient.get(`${this.apiUrl}/${this.link}/${researchId}`, {
-      observe: "response",
-    });
+    return this._httpClient.get(`${this.apiUrl}/${this.link}/${researchId}`);
   }
 
   getSingleResearchInvestigators(researchId: string) {
     return this._httpClient.get(
-      `${this.apiUrl}/${this.link}/${researchId}/investigators`,
-      {
-        observe: "response",
-      }
+      `${this.apiUrl}/${this.link}/${researchId}/investigators`
     );
   }
 
   getSingleResearchRank(researchId: string) {
     return this._httpClient.get(
-      `${this.apiUrl}/${this.link}/${researchId}/rank`,
-      {
-        observe: "response",
-      }
+      `${this.apiUrl}/${this.link}/${researchId}/rank`
     );
   }
 
   getSingleResearchCommonParameters(researchId: string) {
     return this._httpClient.get(
-      `${this.apiUrl}/${this.link}/${researchId}/parameters`,
-      {
-        observe: "response",
-      }
+      `${this.apiUrl}/${this.link}/${researchId}/parameters`
     );
   }
 
   updateParameters(researchId: string, data: object) {
     return this._httpClient.put(
       `${this.apiUrl}/${this.link}/${researchId}/parameters`,
-      { commonParameters: { ...data } },
-      {
-        observe: "response",
-      }
+      { commonParameters: { ...data } }
     );
   }
 
   calcRank(researchId: string, userId: string) {
     return this._httpClient.put(
       `${this.apiUrl}/${this.link}/${researchId}/rank`,
-      { userId: userId },
-      {
-        observe: "response",
-      }
+      { userId: userId }
     );
   }
 
   participate(researchId: string, data: object) {
     return this._httpClient.put(
       `${this.apiUrl}/${this.link}/${researchId}/participate`,
-      data,
-      {
-        observe: "response",
-      }
+      data
     );
   }
 

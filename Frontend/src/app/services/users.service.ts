@@ -36,10 +36,7 @@ export class UsersService {
   updateInvestigator(id: string, data: object) {
     return this.http.put(
       `${this.apiUrl}/${this.link}/${id}/investigator`,
-      data,
-      {
-        observe: "response",
-      }
+      data
     );
   }
 
@@ -73,20 +70,13 @@ export class UsersService {
   participate(data: object, userId: string) {
     return this.http.put(
       `${this.apiUrl}/${this.link}/${userId}/participate`,
-      data,
-      {
-        observe: "response",
-      }
+      data
     );
   }
 
   deleteResearch(userId: string, researchId: string) {
-    return this.http.put(
-      `${this.apiUrl}/${this.link}/${userId}/research`,
-      { researchId: researchId },
-      {
-        observe: "response",
-      }
-    );
+    return this.http.put(`${this.apiUrl}/${this.link}/${userId}/research`, {
+      researchId: researchId,
+    });
   }
 }

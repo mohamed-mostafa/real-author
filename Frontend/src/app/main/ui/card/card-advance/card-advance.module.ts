@@ -1,3 +1,4 @@
+import { CoreSidebarModule } from "./../../../../../@core/components/core-sidebar/core-sidebar.module";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
@@ -32,6 +33,7 @@ const routes: Routes = [
     CoreCommonModule,
     NgApexchartsModule,
     NgbModule,
+    CoreSidebarModule,
   ],
   providers: [CardAdvanceService],
 })

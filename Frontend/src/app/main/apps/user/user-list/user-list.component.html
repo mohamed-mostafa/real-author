@@ -153,7 +153,7 @@
                   class="badge badge-pill"
                   [ngClass]="{
                     'badge-light-success': appStatus == 'Approved',
-                    'badge-light-secondary': appStatus == 'inactive',
+                    'badge-light-danger': appStatus == 'Declined',
                     'badge-light-warning': appStatus == 'Pending'
                   }"
                 >
@@ -198,14 +198,15 @@
                         [class]="'mr-50'"
                       ></span>
                       Edit</a
-                    ><a href="javascript:;" ngbDropdownItem
+                    >
+                    <!-- <a href="javascript:;" ngbDropdownItem
                       ><span
                         [data-feather]="'trash'"
                         [size]="16"
                         [class]="'mr-50'"
                       ></span>
                       Delete</a
-                    >
+                    > -->
                   </div>
                 </div>
               </ng-template>

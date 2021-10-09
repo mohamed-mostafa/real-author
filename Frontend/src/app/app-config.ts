@@ -22,7 +22,7 @@ export const coreConfig: CoreConfig = {
     appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
   },
   layout: {
-    skin  : 'semi-dark',                        // default, dark, bordered, semi-dark
+    skin  : 'bordered',                        // default, dark, bordered, semi-dark
     type  : 'vertical',                       // vertical, horizontal
     animation : 'fadeIn',                     // fadeInLeft, zoomIn , fadeIn, none
     menu : {
@@ -35,7 +35,7 @@ export const coreConfig: CoreConfig = {
       type                 : 'floating-nav',  // navbar-static-top, fixed-top, floating-nav, d-none
       background           : 'navbar-light',  // navbar-light. navbar-dark
       customBackgroundColor: true,            // Boolean: true, false
-      backgroundColor      : ''               // BS color i.e bg-primary, bg-success
+      backgroundColor      : 'bg-primary'               // BS color i.e bg-primary, bg-success
     },
     footer: {
       hidden               : false,           // Boolean: true, false

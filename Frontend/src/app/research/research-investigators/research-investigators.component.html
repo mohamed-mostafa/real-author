@@ -1,0 +1,83 @@
+<ng-container *ngIf="loading; else notLoading">
+  <div class="spinner-border mr-50" style="width: 5rem; height: 5rem">
+    <span class="sr-only">Loading...</span>
+  </div>
+</ng-container>
+<ng-template #notLoading>
+  <div class="card">
+    <div class="row" id="table-striped">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Investigators</h4>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Can Show Result</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let invest of allInvestigators">
+                  <td>{{ invest.firstName }} {{ invest.lastName }}</td>
+                  <td>
+                    <span
+                      class="badge badge-pill"
+                      [ngClass]="{
+                        'badge-light-success':
+                          invest.researches.status == 'Approved',
+                        'badge-light-danger':
+                          invest.researches.status == 'Declined',
+                        'badge-light-warning':
+                          invest.researches.status == 'Pending'
+                      }"
+                    >
+                      {{ invest.researches.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge badge-pill"
+                      [ngClass]="{
+                        'badge-light-success':
+                          invest.researches.canShowResult == 'Approved',
+                        'badge-light-danger':
+                          invest.researches.canShowResult == 'Declined',
+                        'badge-light-warning':
+                          invest.researches.canShowResult == 'Pending'
+                      }"
+                    >
+                      {{ invest.researches.canShowResult }}
+                    </span>
+                  </td>
+                  <td class="overflow-hidden">
+                    <div ngbDropdown container="body">
+                      <button
+                        type="button"
+                        class="btn btn-sm hide-arrow"
+                        ngbDropdownToggle
+                        data-toggle="dropdown"
+                      >
+                        <i data-feather="more-vertical"></i>
+                      </button>
+                      <div ngbDropdownMenu>
+                        <a ngbDropdownItem href="javascript:void(0);"
+                          ><i data-feather="edit-2" class="mr-50"></i
+                          ><span>Edit</span></a
+                        >
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
