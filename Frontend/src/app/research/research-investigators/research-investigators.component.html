@@ -65,9 +65,19 @@
                         <i data-feather="more-vertical"></i>
                       </button>
                       <div ngbDropdownMenu>
-                        <a ngbDropdownItem href="javascript:void(0);"
+                        <a
+                          ngbDropdownItem
+                          href="javascript:void(0);"
+                          (click)="modalOpenForm(modalForm, invest)"
                           ><i data-feather="edit-2" class="mr-50"></i
                           ><span>Edit</span></a
+                        >
+                        <a
+                          ngbDropdownItem
+                          href="javascript:void(0);"
+                          (click)="delete(invest)"
+                          ><i data-feather="delete" class="mr-50"></i
+                          ><span>Delete</span></a
                         >
                       </div>
                     </div>
@@ -81,3 +91,56 @@
     </div>
   </div>
 </ng-template>
+<!-- Modal -->
+<ng-template #modalForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel1">Inline Login Form</h4>
+    <button
+      type="button"
+      class="close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <form>
+      <div class="form-group">
+        <label for="selectStatus">Status</label>
+        <select
+          class="custom-select"
+          id="selectStatus"
+          [(ngModel)]="selectStatus"
+          name="selectStatus"
+        >
+          <option value="">Open this menu</option>
+          <option *ngFor="let item of selectOptions">{{ item }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="selectCanShowResult">Can Show Result</label>
+        <select
+          class="custom-select"
+          id="selectCanShowResult"
+          [(ngModel)]="selectCanShowResult"
+          name="selectCanShowResult"
+        >
+          <option value="">Open this menu</option>
+          <option *ngFor="let item of selectOptions">{{ item }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="edit()" rippleEffect>
+      Edit
+    </button>
+  </div>
+</ng-template>
+<!-- / Modal -->
+<app-toast-container
+  [ngStyle]="toastStyle"
+  aria-live="polite"
+  aria-atomic="true"
+></app-toast-container>

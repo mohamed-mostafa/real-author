@@ -77,10 +77,7 @@ export class ResearchesService {
   deleteInvestigator(researchId: string, investigatorId: string) {
     return this._httpClient.put(
       `${this.apiUrl}/${this.link}/${researchId}/investigators`,
-      { investigatorId: investigatorId },
-      {
-        observe: "response",
-      }
+      { investigatorId }
     );
   }
 }

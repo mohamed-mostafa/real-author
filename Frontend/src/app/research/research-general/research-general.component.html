@@ -28,14 +28,21 @@
           {{ data.abstract ? data.abstract : "No Abstract Found" }}
         </h6>
       </div>
-      <!-- <div class="FloatRight">
+      <div class="FloatRight">
         <button
+          [disabled]="loading"
+          tabindex="5"
+          rippleEffect
           (click)="participateInResearch()"
           class="btn btn-primary mr-1 waves-effect waves-float waves-light"
         >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
           Participate
         </button>
-      </div> -->
+      </div>
     </div>
 
     <div class="avatar-group">
