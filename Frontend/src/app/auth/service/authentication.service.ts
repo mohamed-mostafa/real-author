@@ -73,8 +73,21 @@ export class AuthenticationService {
         .pipe(
           map((user) => {
             // login successful if there's a jwt token in the response
-
-            if (user && user.token) {
+            if (user.user.appStatus == "Pending") {
+              // this._router.navigate(["/pages/miscellaneous/not-authorized"]);
+              const obj = {
+                msg: "Your account is pending approval by admin",
+                status: "401",
+              };
+              return obj;
+            } else if (user.user.appStatus == "Declined") {
+              // this._router.navigate(["/pages/miscellaneous/not-authorized"]);
+              const obj = {
+                msg: "Your account is rejected by admin",
+                status: "403",
+              };
+              return obj;
+            } else if (user && user.token) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               // localStorage.setItem("currentUser", JSON.stringify(user));
               const role = user.user.roles[0] == "admin" ? "Admin" : "User";
@@ -82,6 +95,7 @@ export class AuthenticationService {
                 token: user.token,
                 avatar: "avatar-s-11.jpg",
                 email: user.user.email,
+                appStatus: user.user.appStatus,
                 firstName: user.user.firstName,
                 id: user.user._id,
                 lastName: user.user.lastName,

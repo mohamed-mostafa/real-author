@@ -1,3 +1,4 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { UsersService } from "./../../../../services/users.service";
 import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
@@ -29,7 +30,6 @@ export class UserListComponent implements OnInit {
   public loading = false;
   public error = "";
   public previousStatusFilter = "";
-
   public selectRole: any = [
     { name: "All", value: "" },
     { name: "Admin", value: "admin" },
@@ -39,13 +39,23 @@ export class UserListComponent implements OnInit {
     { name: "All", value: "" },
     { name: "Approved", value: "Approved" },
     { name: "Pending", value: "Pending" },
+    { name: "Declined", value: "Declined" },
+  ];
+  public selectOptions: any = [
+    { name: "Approved", value: "Approved" },
+    { name: "Pending", value: "Pending" },
+    { name: "Declined", value: "Declined" },
   ];
 
   public selectedRole = [];
   public selectedPlan = [];
   public selectedStatus = [];
   public searchValue = "";
-
+  editModal;
+  selectedUser;
+  selectedUserVal;
+  userRole: string;
+  loggedIn = JSON.parse(localStorage.getItem("currentUser"));
   // Decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
@@ -64,6 +74,7 @@ export class UserListComponent implements OnInit {
     private _userListService: UserListService,
     private _coreSidebarService: CoreSidebarService,
     private userService: UsersService,
+    private modalService: NgbModal,
     private _coreConfigService: CoreConfigService
   ) {
     this._unsubscribeAll = new Subject();
@@ -198,6 +209,7 @@ export class UserListComponent implements OnInit {
     //         });
     //     }
     //   });
+    this.userRole = this.loggedIn.role;
     this.getAllUsers();
   }
 
@@ -223,5 +235,47 @@ export class UserListComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+  // modal Open Form
+  modalOpenForm(modalForm, user) {
+    this.selectedUser = user;
+    this.selectedUserVal = user.appStatus;
+    this.editModal = this.modalService.open(modalForm);
+  }
+  //  edit() {
+  // this.loading = true;
+  // const userData = this.finalUserData();
+  // this.httpUserService.update(this.user._id, userData).subscribe(
+  //   (data) => {
+  //     if (data.status === 200) {
+  //       this.dialogRef.close();
+  //       this.notificationService.successNotification(
+  //         "The user updated successfully"
+  //       );
+  //       this.loading = false;
+  //     }
+  //   },
+  //   (err) => {
+  //     this.loading = false;
+  //     this.notificationService.errorNotification(err.message);
+  //   }
+  // );
+  //}
+  edit() {
+    this.loading = true;
+    this.userService
+      .update(this.selectedUser._id, { appStatus: this.selectedUserVal })
+      .subscribe(
+        (result) => {
+          this.loading = false;
+          this.getAllUsers();
+          this.editModal.close();
+        },
+        (error) => {
+          console.log(error);
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 }

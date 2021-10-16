@@ -37,6 +37,7 @@ import { ResearchInvestigatorsComponent } from './research/research-investigator
 import { ResearchParametersComponent } from './research/research-parameters/research-parameters.component';
 import { ResearchRankComponent } from './research/research-rank/research-rank.component';
 import { ResearchGeneralComponent } from './research/research-general/research-general.component';
+import { InvestigatorParametersComponent } from './research/investigator-parameters/investigator-parameters.component';
 
 const appRoutes: Routes = [
   {
@@ -124,6 +125,7 @@ const appRoutes: Routes = [
     ResearchParametersComponent,
     ResearchRankComponent,
     ResearchGeneralComponent,
+    InvestigatorParametersComponent,
   ],
   imports: [
     BrowserModule,

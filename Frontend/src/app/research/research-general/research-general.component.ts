@@ -14,14 +14,22 @@ export class ResearchGeneralComponent implements OnInit {
   public loading = false;
   public error = "";
   currentUser: any;
+  userRole: string;
+  investigatorRole: string;
+  select: string;
   loggedIn = JSON.parse(localStorage.getItem("currentUser"));
+  investigator: any;
+  participated: boolean;
   constructor(
     private researchesService: ResearchesService,
     private toastr: ToastrService,
     private userService: UsersService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userRole = this.loggedIn.role;
+    this.loadService();
+  }
 
   async participateInResearch() {
     this.loading = true;
@@ -60,5 +68,33 @@ export class ResearchGeneralComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+  loadService() {
+    this.select = "";
+    this.participated = false;
+    this.data.progress =
+      this.data.status === "NEW"
+        ? 0
+        : this.data.status === "IN PROGRESS"
+        ? 50
+        : 100;
+    for (const investigator of this.data.investigators) {
+      if (investigator === this.loggedIn.id) {
+        this.participated = true;
+        this.getUserInvestigator(this.data._id, this.loggedIn.id).subscribe(
+          (res) => {
+            this.investigator = res.body;
+            this.investigatorRole = this.investigator.roles[0];
+          },
+          (error) => {
+            console.log(error);
+            this.error = error;
+          }
+        );
+      }
+    }
+  }
+  getUserInvestigator(researchId: string, userId: string) {
+    return this.userService.getUserResearch(userId, researchId);
   }
 }

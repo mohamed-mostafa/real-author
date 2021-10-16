@@ -28,7 +28,10 @@
           {{ data.abstract ? data.abstract : "No Abstract Found" }}
         </h6>
       </div>
-      <div class="FloatRight">
+      <div
+        class="FloatRight"
+        *ngIf="userRole != 'Admin' && !participated && data?.status === 'NEW'"
+      >
         <button
           [disabled]="loading"
           tabindex="5"
@@ -68,6 +71,18 @@
         </div>
       </ng-container>
       <ng-template #elseTemplate> No Investigators Found </ng-template>
+      <br />
+    </div>
+    <div
+      *ngIf="participated && userRole !== 'Admin'"
+      style="text-align: center; font-size: 25px"
+    >
+      <div *ngIf="investigator?.status === 'Declined'">
+        You have been declined from this research
+      </div>
+      <div *ngIf="investigator?.status === 'Pending'">
+        Your request is still pending
+      </div>
     </div>
   </div>
 </div>

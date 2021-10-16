@@ -22,8 +22,6 @@ export class ResearchRankComponent implements OnInit {
       (result) => {
         this.allRanks = result;
         this.calcPercentage(result);
-        console.log(result);
-
         this.loading = false;
       },
       (error) => {

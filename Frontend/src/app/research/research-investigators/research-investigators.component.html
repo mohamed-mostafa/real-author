@@ -74,6 +74,26 @@
                         >
                         <a
                           ngbDropdownItem
+                          *ngIf="
+                            (invest.researches.parameters.status ===
+                              'Pending Validation' ||
+                              invest.researches.parameters.status ===
+                                'Validate') &&
+                            (userRole === 'Admin' ||
+                              investigatorRole === 'Admin')
+                          "
+                          href="javascript:void(0);"
+                          (click)="updateParameters(modalLG, invest)"
+                          ><i data-feather="sliders" class="mr-50"></i
+                          ><span>Parameters</span></a
+                        >
+                        <a
+                          ngbDropdownItem
+                          *ngIf="
+                            (userRole === 'Admin' ||
+                              investigatorRole === 'Admin') &&
+                            invest?.researches?.status != 'Approved'
+                          "
                           href="javascript:void(0);"
                           (click)="delete(invest)"
                           ><i data-feather="delete" class="mr-50"></i
@@ -135,6 +155,37 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" (click)="edit()" rippleEffect>
       Edit
+    </button>
+  </div>
+</ng-template>
+<!-- / Modal -->
+<!-- Modal -->
+<ng-template #modalLG let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="myModalLabel160">
+      {{ selectedElement.investigator.firstName }}
+      {{ selectedElement.investigator.lastName }}
+    </h2>
+    <button
+      type="button"
+      class="close"
+      (click)="modal.dismiss('Cross click')"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" tabindex="0" ngbAutofocus>
+    <app-investigator-parameters
+      [data]="selectedElement"
+    ></app-investigator-parameters>
+    <button
+      type="button"
+      class="btn btn-secondary modalLGFooter"
+      (click)="modal.close('Accept click')"
+      rippleEffect
+    >
+      Exit
     </button>
   </div>
 </ng-template>

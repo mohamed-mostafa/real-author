@@ -29,17 +29,17 @@
                     {{ rank.researches.updated_at | date: "short" }}
                   </td>
                   <td>
-                    <div class="progress progress-bar-primary my-50">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="58"
-                        aria-valuemin="58"
-                        aria-valuemax="100"
-                        style="width: 100%"
-                      ></div>
-                    </div>
-                    {{ rank.researches.percentage }} %
+                    <label
+                      style="transform: translate(70px, 7px);"
+                      >{{ rank.researches.percentage }}%</label
+                    >
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      disabled="true"
+                      [(ngModel)]="rank.researches.percentage"
+                    />
                   </td>
                   <td>
                     {{ rank.researches.rankStatus }}

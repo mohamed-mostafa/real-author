@@ -1,7 +1,6 @@
-import { ColumnMode } from "@swimlane/ngx-datatable";
-import { ResearchesService } from "../../services/researches.service";
+import { ResearchesService } from "./../../services/researches.service";
+import { UsersService } from "./../../services/users.service";
 import { Subject } from "rxjs";
-import { FlatpickrOptions } from "ng2-flatpickr";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 
@@ -18,6 +17,12 @@ export class ResearchDetailsComponent implements OnInit {
   public receivedData: any;
   public loading = false;
   public error = "";
+  userRole: string;
+  investigatorRole: string;
+  select: string;
+  research: any;
+  investigator: any;
+  loggedIn = JSON.parse(localStorage.getItem("currentUser"));
 
   // private
   private _unsubscribeAll: Subject<any>;
@@ -25,7 +30,7 @@ export class ResearchDetailsComponent implements OnInit {
    * Constructor
    *
    */
-  constructor(private router: Router) {
+  constructor(private router: Router, private httpUserService: UsersService) {
     this._unsubscribeAll = new Subject();
     if (
       this.router.getCurrentNavigation() &&
@@ -53,8 +58,41 @@ export class ResearchDetailsComponent implements OnInit {
         ],
       },
     };
+    this.userRole = this.loggedIn.role;
+    this.loadService();
   }
-
+  loadService() {
+    this.select = "";
+    this.loading = true;
+    this.receivedData.progress =
+      this.receivedData.status === "NEW"
+        ? 0
+        : this.receivedData.status === "IN PROGRESS"
+        ? 50
+        : 100;
+    for (const investigator of this.receivedData.investigators) {
+      if (investigator === this.loggedIn.id) {
+        this.getUserInvestigator(
+          this.receivedData._id,
+          this.loggedIn.id
+        ).subscribe(
+          (res) => {
+            this.investigator = res.body;
+            this.investigatorRole = this.investigator.roles[0];
+            this.loading = false;
+          },
+          (error) => {
+            console.log(error);
+            this.error = error;
+            this.loading = false;
+          }
+        );
+      }
+    }
+  }
+  getUserInvestigator(researchId: string, userId: string) {
+    return this.httpUserService.getUserResearch(userId, researchId);
+  }
   /**
    * On destroy
    */

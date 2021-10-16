@@ -19,7 +19,11 @@ export class ResearchInvestigatorsComponent implements OnInit {
   selectCanShowResult = "";
   selectedItems;
   editModal;
+  updateParameterModal;
   @Input() data: any;
+  userRole: string;
+  loggedIn = JSON.parse(localStorage.getItem("currentUser"));
+  selectedElement;
   constructor(
     private researchesService: ResearchesService,
     private usersService: UsersService,
@@ -29,6 +33,7 @@ export class ResearchInvestigatorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getResearchInvestigators();
+    this.userRole = this.loggedIn.role;
   }
   getResearchInvestigators(): any {
     this.loading = true;
@@ -53,6 +58,14 @@ export class ResearchInvestigatorsComponent implements OnInit {
     this.selectCanShowResult = items.researches.canShowResult;
     this.editModal = this.modalService.open(modalForm);
   }
+  updateParameters(modalLG, element: object) {
+    this.selectedElement = { investigator: element, research: this.data };
+    this.updateParameterModal = this.modalService.open(modalLG, {
+      centered: true,
+      size: "lg",
+    });
+  }
+
   edit() {
     this.loading = true;
     this.selectedItems.researches.status = this.selectStatus;
