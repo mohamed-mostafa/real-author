@@ -22,10 +22,13 @@ export class CardAdvanceComponent implements OnInit {
   public error = "";
   public returnUrl: string;
   public allResearches = [];
+  public rows;
   public sidebarToggleRef = false;
   image: any;
   imagePreview: any;
-
+  public searchValue = "";
+  userRole: string;
+  loggedIn = JSON.parse(localStorage.getItem("currentUser"));
   // Private
   private _unsubscribeAll: Subject<any>;
   /**
@@ -44,6 +47,7 @@ export class CardAdvanceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // localStorage.removeItem("researchDetails");
     // get return url from route parameters or default to '/'
     this.returnUrl = this._route.snapshot.queryParams["returnUrl"] || "/";
 
@@ -58,6 +62,7 @@ export class CardAdvanceComponent implements OnInit {
     //   .subscribe((config) => {
     //     this.coreConfig = config;
     //   });
+    this.userRole = this.loggedIn.role;
     this.getAllResearches();
   }
   getAllResearches(): any {
@@ -65,6 +70,7 @@ export class CardAdvanceComponent implements OnInit {
     this.researchesService.getAllResearches().subscribe(
       (result) => {
         this.allResearches = result;
+        this.rows = result;
         this.loading = false;
       },
       (error) => {
@@ -128,6 +134,17 @@ export class CardAdvanceComponent implements OnInit {
     reader.readAsDataURL(file);
   }
   showResearchDetails(research) {
-    this.router.navigate(["researchDetails"], { state: { data: research } });
+    localStorage.setItem("researchDetails", JSON.stringify(research));
+    this.router.navigate(["researchDetails"]);
+  }
+  filterUpdate(event) {
+    const val = event.target.value.toLowerCase();
+    // Filter Our Data
+    const temp = this.rows.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // Update The Rows
+    this.allResearches = temp;
   }
 }

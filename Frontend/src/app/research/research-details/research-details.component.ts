@@ -14,7 +14,6 @@ export class ResearchDetailsComponent implements OnInit {
 
   public contentHeader: object;
   public data: any;
-  public receivedData: any;
   public loading = false;
   public error = "";
   userRole: string;
@@ -23,6 +22,7 @@ export class ResearchDetailsComponent implements OnInit {
   research: any;
   investigator: any;
   loggedIn = JSON.parse(localStorage.getItem("currentUser"));
+  researchDetails = JSON.parse(localStorage.getItem("researchDetails"));
 
   // private
   private _unsubscribeAll: Subject<any>;
@@ -32,12 +32,6 @@ export class ResearchDetailsComponent implements OnInit {
    */
   constructor(private router: Router, private httpUserService: UsersService) {
     this._unsubscribeAll = new Subject();
-    if (
-      this.router.getCurrentNavigation() &&
-      this.router.getCurrentNavigation().extras.state.data
-    )
-      this.receivedData = this.router.getCurrentNavigation().extras.state.data;
-    else router.navigate(["/ui/researches"]);
   }
   ngOnInit(): void {
     this.contentHeader = {
@@ -64,16 +58,16 @@ export class ResearchDetailsComponent implements OnInit {
   loadService() {
     this.select = "";
     this.loading = true;
-    this.receivedData.progress =
-      this.receivedData.status === "NEW"
+    this.researchDetails.progress =
+      this.researchDetails.status === "NEW"
         ? 0
-        : this.receivedData.status === "IN PROGRESS"
+        : this.researchDetails.status === "IN PROGRESS"
         ? 50
         : 100;
-    for (const investigator of this.receivedData.investigators) {
+    for (const investigator of this.researchDetails.investigators) {
       if (investigator === this.loggedIn.id) {
         this.getUserInvestigator(
-          this.receivedData._id,
+          this.researchDetails._id,
           this.loggedIn.id
         ).subscribe(
           (res) => {

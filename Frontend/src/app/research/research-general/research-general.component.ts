@@ -1,8 +1,7 @@
-import { ToastrService } from "ngx-toastr";
+import { ToastService } from "./../../main/components/toasts/toasts.service";
 import { UsersService } from "./../../services/users.service";
 import { ResearchesService } from "./../../services/researches.service";
 import { Component, Input, OnInit } from "@angular/core";
-import Swal from "sweetalert2";
 
 @Component({
   selector: "app-research-general",
@@ -20,9 +19,10 @@ export class ResearchGeneralComponent implements OnInit {
   loggedIn = JSON.parse(localStorage.getItem("currentUser"));
   investigator: any;
   participated: boolean;
+  public toastStyle: object = {};
   constructor(
     private researchesService: ResearchesService,
-    private toastr: ToastrService,
+    private toastService: ToastService,
     private userService: UsersService
   ) {}
 
@@ -46,14 +46,9 @@ export class ResearchGeneralComponent implements OnInit {
             .subscribe(
               (result2) => {
                 this.loading = false;
-                this.toastr.success(
-                  "You have participated successfully ",
-                  "Success!",
-                  {
-                    toastClass: "toast ngx-toastr",
-                    closeButton: true,
-                  }
-                );
+                this.loadService();
+                this.toastService.show("You have participated successfully");
+                this.toastStyle = { left: 0, right: "unset" };
               },
               (error) => {
                 console.log(error);

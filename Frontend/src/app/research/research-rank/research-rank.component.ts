@@ -1,16 +1,19 @@
+import { ColumnMode } from "@swimlane/ngx-datatable";
 import { ResearchesService } from "../../services/researches.service";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 
 @Component({
   selector: "app-research-rank",
   templateUrl: "./research-rank.component.html",
   styleUrls: ["./research-rank.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ResearchRankComponent implements OnInit {
   public allRanks: any = [];
   public loading = false;
   public error = "";
   @Input() data: any;
+  public ColumnMode = ColumnMode;
   constructor(private researchesService: ResearchesService) {}
 
   ngOnInit(): void {

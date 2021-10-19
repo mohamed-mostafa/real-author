@@ -7,7 +7,7 @@
 </ng-container>
 <ng-template #elseTemplate>
   <ng-container *ngIf="loading; else notLoading">
-    <div class="spinner-border mr-50" style="width: 5rem; height: 5rem">
+    <div class="spinner-grow text-primary mr-50 centerLoading">
       <span class="sr-only">Loading...</span>
     </div>
   </ng-container>
@@ -20,7 +20,7 @@
           </div>
           <div class="badgeStyle">
             <span class="badge badge-primary" style="font-size: 18px">{{
-              userResearch.parameters.status
+              userResearch?.parameters?.status
             }}</span>
           </div>
         </div>
@@ -35,12 +35,12 @@
       </div>
       <div>
         <div class="row">
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
-                'border-danger': !userResearch.parameters.studyDesign,
-                'border-success': userResearch.parameters.studyDesign
+                'border-danger': !userResearch?.parameters?.studyDesign,
+                'border-success': userResearch?.parameters?.studyDesign
               }"
             >
               <div class="card-body height">
@@ -59,19 +59,23 @@
                     (click)="check('studyDesign')"
                   />
                   <span class="slider round">
-                    <label *ngIf="userResearch.parameters.studyDesign"></label>
-                    <label *ngIf="!userResearch.parameters.studyDesign"></label>
+                    <label
+                      *ngIf="userResearch?.parameters?.studyDesign"
+                    ></label>
+                    <label
+                      *ngIf="!userResearch?.parameters?.studyDesign"
+                    ></label>
                   </span>
                 </label>
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
-                'border-danger': !userResearch.parameters.monitoring,
-                'border-success': userResearch.parameters.monitoring
+                'border-danger': !userResearch?.parameters?.monitoring,
+                'border-success': userResearch?.parameters?.monitoring
               }"
             >
               <div class="card-body height">
@@ -91,14 +95,16 @@
                     (click)="check('monitoring')"
                   />
                   <span class="slider round">
-                    <label *ngIf="userResearch.parameters.monitoring"></label>
-                    <label *ngIf="!userResearch.parameters.monitoring"></label>
+                    <label *ngIf="userResearch?.parameters?.monitoring"></label>
+                    <label
+                      *ngIf="!userResearch?.parameters?.monitoring"
+                    ></label>
                   </span>
                 </label>
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card">
               <div class="card-body height">
                 <div class="one-contibuter">
@@ -118,14 +124,16 @@
                     (click)="check('submission')"
                   />
                   <span class="slider round">
-                    <label *ngIf="userResearch.parameters.submission"></label>
-                    <label *ngIf="!userResearch.parameters.submission"></label>
+                    <label *ngIf="userResearch?.parameters?.submission"></label>
+                    <label
+                      *ngIf="!userResearch?.parameters?.submission"
+                    ></label>
                   </span>
                 </label>
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -162,7 +170,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div class="closed" *ngIf="!commonParameters.fund">CLOSED</div>
@@ -191,7 +199,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -221,7 +229,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div class="closed" *ngIf="!commonParameters.dataCollection">
@@ -256,7 +264,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div [class]="commonParameters.studyPlan ? 'must' : 'closed'">
@@ -282,7 +290,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -307,7 +315,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -335,7 +343,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -365,7 +373,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div [class]="commonParameters.revising ? 'must' : 'closed'">
@@ -390,7 +398,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div *ngIf="!commonParameters.citation" class="closed">
@@ -421,7 +429,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div class="card">
               <div class="card-body height">
                 <div class="one-contibuter">
@@ -449,7 +457,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -482,7 +490,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -513,7 +521,7 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-md-4 col-12">
             <div
               class="card"
               [ngClass]="{

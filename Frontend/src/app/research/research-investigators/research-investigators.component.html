@@ -1,5 +1,5 @@
 <ng-container *ngIf="loading; else notLoading">
-  <div class="spinner-border mr-50" style="width: 5rem; height: 5rem">
+  <div class="spinner-grow text-primary mr-50 centerLoading">
     <span class="sr-only">Loading...</span>
   </div>
 </ng-container>
@@ -11,101 +11,122 @@
           <div class="card-header">
             <h4 class="card-title">Investigators</h4>
           </div>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Status</th>
-                  <th>Can Show Result</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let invest of allInvestigators">
-                  <td>{{ invest.firstName }} {{ invest.lastName }}</td>
-                  <td>
+          <ngx-datatable
+            class="bootstrap core-bootstrap"
+            [headerHeight]="40"
+            [rowHeight]="58"
+            [limit]="10"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [rows]="allInvestigators"
+            [scrollbarH]="true"
+          >
+            <ngx-datatable-column name="User" prop="firstName">
+              <ng-template
+                let-row="row"
+                let-name="value"
+                ngx-datatable-cell-template
+              >
+                {{ row.firstName + " " + row.lastName }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status" prop="researches.status">
+              <ng-template
+                ngx-datatable-cell-template
+                let-rowIndex="rowIndex"
+                let-row="row"
+                let-value="value"
+              >
+                <div title="Double click to edit">
+                  <div
+                    class="badge badge-pill"
+                    [ngClass]="{
+                      'badge-light-success': value == 'Approved',
+                      'badge-light-danger': value == 'Declined',
+                      'badge-light-warning': value == 'Pending'
+                    }"
+                  >
+                    {{ value }}
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column
+              name="Can Show Result"
+              prop="researches.canShowResult"
+            >
+              <ng-template
+                ngx-datatable-cell-template
+                let-rowIndex="rowIndex"
+                let-row="row"
+                let-value="value"
+              >
+                <div title="Double click to edit">
+                  <div
+                    class="badge badge-pill"
+                    [ngClass]="{
+                      'badge-light-success': value == 'Approved',
+                      'badge-light-danger': value == 'Declined',
+                      'badge-light-warning': value == 'Pending'
+                    }"
+                  >
+                    {{ value }}
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Actions" [sortable]="false">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <div ngbDropdown container="body">
+                  <button
+                    ngbDropdownToggle
+                    type="button"
+                    class="btn icon-btn btn-sm hide-arrow"
+                    rippleEffect
+                  >
                     <span
-                      class="badge badge-pill"
-                      [ngClass]="{
-                        'badge-light-success':
-                          invest.researches.status == 'Approved',
-                        'badge-light-danger':
-                          invest.researches.status == 'Declined',
-                        'badge-light-warning':
-                          invest.researches.status == 'Pending'
-                      }"
+                      [data-feather]="'more-vertical'"
+                      [class]="'cursor-pointer'"
+                    ></span>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a
+                      ngbDropdownItem
+                      href="javascript:void(0);"
+                      (click)="modalOpenForm(modalForm, row)"
+                      ><i data-feather="edit-2" class="mr-50"></i
+                      ><span>Edit</span></a
                     >
-                      {{ invest.researches.status }}
-                    </span>
-                  </td>
-                  <td>
-                    <span
-                      class="badge badge-pill"
-                      [ngClass]="{
-                        'badge-light-success':
-                          invest.researches.canShowResult == 'Approved',
-                        'badge-light-danger':
-                          invest.researches.canShowResult == 'Declined',
-                        'badge-light-warning':
-                          invest.researches.canShowResult == 'Pending'
-                      }"
+                    <a
+                      ngbDropdownItem
+                      *ngIf="
+                        (row.researches.parameters.status ===
+                          'Pending Validation' ||
+                          row.researches.parameters.status === 'Validate') &&
+                        (userRole === 'Admin' || investigatorRole === 'Admin')
+                      "
+                      href="javascript:void(0);"
+                      (click)="updateParameters(modalLG, row)"
+                      ><i data-feather="sliders" class="mr-50"></i
+                      ><span>Parameters</span></a
                     >
-                      {{ invest.researches.canShowResult }}
-                    </span>
-                  </td>
-                  <td class="overflow-hidden">
-                    <div ngbDropdown container="body">
-                      <button
-                        type="button"
-                        class="btn btn-sm hide-arrow"
-                        ngbDropdownToggle
-                        data-toggle="dropdown"
-                      >
-                        <i data-feather="more-vertical"></i>
-                      </button>
-                      <div ngbDropdownMenu>
-                        <a
-                          ngbDropdownItem
-                          href="javascript:void(0);"
-                          (click)="modalOpenForm(modalForm, invest)"
-                          ><i data-feather="edit-2" class="mr-50"></i
-                          ><span>Edit</span></a
-                        >
-                        <a
-                          ngbDropdownItem
-                          *ngIf="
-                            (invest.researches.parameters.status ===
-                              'Pending Validation' ||
-                              invest.researches.parameters.status ===
-                                'Validate') &&
-                            (userRole === 'Admin' ||
-                              investigatorRole === 'Admin')
-                          "
-                          href="javascript:void(0);"
-                          (click)="updateParameters(modalLG, invest)"
-                          ><i data-feather="sliders" class="mr-50"></i
-                          ><span>Parameters</span></a
-                        >
-                        <a
-                          ngbDropdownItem
-                          *ngIf="
-                            (userRole === 'Admin' ||
-                              investigatorRole === 'Admin') &&
-                            invest?.researches?.status != 'Approved'
-                          "
-                          href="javascript:void(0);"
-                          (click)="delete(invest)"
-                          ><i data-feather="delete" class="mr-50"></i
-                          ><span>Delete</span></a
-                        >
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                    <a
+                      ngbDropdownItem
+                      *ngIf="
+                        (userRole === 'Admin' ||
+                          investigatorRole === 'Admin') &&
+                        row?.researches?.status != 'Approved'
+                      "
+                      href="javascript:void(0);"
+                      (click)="delete(row)"
+                      ><i data-feather="delete" class="mr-50"></i
+                      ><span>Delete</span></a
+                    >
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
         </div>
       </div>
     </div>
@@ -114,7 +135,7 @@
 <!-- Modal -->
 <ng-template #modalForm let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="myModalLabel1">Inline Login Form</h4>
+    <h4 class="modal-title" id="myModalLabel1">Research Investigator</h4>
     <button
       type="button"
       class="close"
@@ -148,6 +169,19 @@
         >
           <option value="">Open this menu</option>
           <option *ngFor="let item of selectOptions">{{ item }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="selectedRole">Role</label>
+        <select
+          class="custom-select"
+          id="selectedRole"
+          [(ngModel)]="selectedRole"
+          name="selectedRole"
+        >
+          <option *ngFor="let item of rolesOptions" value="{{ item.value }}">
+            {{ item.label }}
+          </option>
         </select>
       </div>
     </form>

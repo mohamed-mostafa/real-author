@@ -1,4 +1,4 @@
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
@@ -33,11 +33,13 @@ import { BasicCustomContextMenuComponent } from "./main/extensions/context-menu/
 import { SubMenuCustomContextMenuComponent } from "./main/extensions/context-menu/custom-context-menu/sub-menu-custom-context-menu/sub-menu-custom-context-menu.component";
 import { UserComponent } from "./user/user.component";
 import { ResearchDetailsComponent } from "./research/research-details/research-details.component";
-import { ResearchInvestigatorsComponent } from './research/research-investigators/research-investigators.component';
-import { ResearchParametersComponent } from './research/research-parameters/research-parameters.component';
-import { ResearchRankComponent } from './research/research-rank/research-rank.component';
-import { ResearchGeneralComponent } from './research/research-general/research-general.component';
-import { InvestigatorParametersComponent } from './research/investigator-parameters/investigator-parameters.component';
+import { ResearchInvestigatorsComponent } from "./research/research-investigators/research-investigators.component";
+import { ResearchParametersComponent } from "./research/research-parameters/research-parameters.component";
+import { ResearchRankComponent } from "./research/research-rank/research-rank.component";
+import { ResearchGeneralComponent } from "./research/research-general/research-general.component";
+import { InvestigatorParametersComponent } from "./research/investigator-parameters/investigator-parameters.component";
+import { UserProfileComponent } from "./user-profile/user-profile.component";
+import { HistoryComponent } from './history/history.component';
 
 const appRoutes: Routes = [
   {
@@ -106,6 +108,8 @@ const appRoutes: Routes = [
   },
   { path: "users", component: UserComponent },
   { path: "researchDetails", component: ResearchDetailsComponent },
+  { path: "profile", component: UserProfileComponent },
+  { path: "history", component: HistoryComponent },
   {
     path: "**",
     redirectTo: "/pages/miscellaneous/error", //Error 404 - Page not found
@@ -126,6 +130,8 @@ const appRoutes: Routes = [
     ResearchRankComponent,
     ResearchGeneralComponent,
     InvestigatorParametersComponent,
+    UserProfileComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,

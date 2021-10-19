@@ -15,7 +15,7 @@ export const menu: CoreMenu[] = [
     translate: "MENU.PROFILE",
     type: "item",
     icon: "user",
-    url: "pages/profile",
+    url: "profile",
   },
   {
     id: "users",
@@ -65,7 +65,8 @@ export const menu: CoreMenu[] = [
     translate: "MENU.HISTORY",
     type: "item",
     icon: "file-text",
-    url: "components/timeline",
+    url: "history",
+    role: ["Admin"],
   },
   // // // Dashboard
   // {

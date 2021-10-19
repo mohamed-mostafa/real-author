@@ -158,3 +158,39 @@ input:disabled {
 .card .card-footer {
   border-top: 0px solid #dae1e7;
 }
+@media screen and (max-width: 700px) {
+  .one-contibuter {
+    background-color: rgb(245, 184, 52);
+    width: 23rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 3px;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
+    transform: translate(-22px, -22px);
+  }
+
+  .must {
+    color: white;
+    background-color: rgb(168, 5, 5);
+    width: 23rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 3px;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
+    transform: translate(-22px, -22px);
+  }
+
+  .closed {
+    color: white;
+    background-color: rgb(80, 80, 80);
+    width: 23rem;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 3px;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
+    transform: translate(-22px, -22px);
+  }
+}
