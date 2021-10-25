@@ -100,6 +100,7 @@ export class AuthenticationService {
                 id: user.user._id,
                 lastName: user.user.lastName,
                 role,
+                image: user.user.image,
               };
               localStorage.setItem("currentUser", JSON.stringify(obj));
 

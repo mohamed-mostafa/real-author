@@ -21,6 +21,13 @@
             [rows]="allRanks"
             [scrollbarH]="true"
           >
+            <ngx-datatable-column name="#" prop="rowNumber" [width]="50">
+              <ng-template let-rowNumber="value" ngx-datatable-cell-template>
+                <div>
+                  {{ rowNumber }}
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="User" prop="firstName">
               <ng-template
                 let-row="row"
@@ -66,8 +73,13 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Rank" prop="researches.rankStatus">
               <ng-template let-rankStatus="value" ngx-datatable-cell-template>
-                <div>
-                  <i class="feather font-medium-3"></i>
+                <div
+                  class="badge badge-pill"
+                  [ngClass]="{
+                    'badge-light-success': rankStatus == 'Accepted',
+                    'badge-light-danger': rankStatus == 'Rejected'
+                  }"
+                >
                   {{ rankStatus }}
                 </div>
               </ng-template>

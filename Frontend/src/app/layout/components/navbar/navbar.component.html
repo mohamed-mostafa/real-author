@@ -35,7 +35,7 @@
   </div>
   <ul class="nav navbar-nav align-items-center ml-auto">
     <!-- Language selection -->
-    <li ngbDropdown class="nav-item dropdown dropdown-language">
+    <!-- <li ngbDropdown class="nav-item dropdown dropdown-language">
       <a class="nav-link dropdown-toggle" id="dropdown-flag" ngbDropdownToggle>
         <i
           class="flag-icon flag-icon-{{
@@ -56,7 +56,7 @@
           {{ languageOptions[lang].title }}
         </a>
       </div>
-    </li>
+    </li> -->
     <!--/ Language selection -->
 
     <!-- Toggle skin -->
@@ -102,7 +102,11 @@
           <span class="avatar"
             ><img
               class="round"
-              src="assets/images/portrait/small/{{ this.currentUser.avatar }}"
+              [src]="
+                this.currentUser.image
+                  ? this.currentUser.image
+                  : 'assets/images/avatars/user_image.jpg'
+              "
               alt="avatar"
               height="40"
               width="40" /><span class="avatar-status-online"></span

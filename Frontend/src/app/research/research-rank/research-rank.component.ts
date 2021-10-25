@@ -22,7 +22,10 @@ export class ResearchRankComponent implements OnInit {
   getResearchRanks(): any {
     this.loading = true;
     this.researchesService.getSingleResearchRank(this.data._id).subscribe(
-      (result) => {
+      (result: any) => {
+        result.forEach((element, index) => {
+          element.rowNumber = index + 1;
+        });
         this.allRanks = result;
         this.calcPercentage(result);
         this.loading = false;

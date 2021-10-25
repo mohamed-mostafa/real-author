@@ -25,7 +25,7 @@
       </div>
       <div>
         <div class="row">
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -36,8 +36,8 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Study Design</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-1">Study Design</h5>
+                <p class="card-text textPadding">
                   Formulation of trials and experiments, as well as
                   observational studies in research.
                 </p>
@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -78,8 +78,8 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Monitoring</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-1">Monitoring</h5>
+                <p class="card-text textPadding">
                   Observe and check the progress or quality over a period of
                   time.
                 </p>
@@ -110,7 +110,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div class="card">
               <div class="card-body height">
                 <div class="one-contibuter">
@@ -118,8 +118,8 @@
                     research.commonParameters["submission"] ? "DONE" : "OPEN"
                   }}
                 </div>
-                <h5 class="card-title mt-n2">Submission</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-n2">Submission</h5>
+                <p class="card-text textPadding">
                   Giving a document, proposal, piece of writing.
                 </p>
               </div>
@@ -149,77 +149,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
-            <div class="card border-primary">
-              <div class="card-body height">
-                <div
-                  class="closed"
-                  *ngIf="!research.commonParameters['manuscriptDrafting']"
-                >
-                  CLOSED
-                </div>
-                <h5
-                  class="card-title"
-                  [ngClass]="{
-                    'mt-1': research.commonParameters['manuscriptDrafting'],
-                    'mt-n2': !research.commonParameters['manuscriptDrafting']
-                  }"
-                >
-                  Manuscript Drafting
-                </h5>
-                <p class="card-text">
-                  Preliminary status of the manuscript in which the write up is
-                  yet to be put in shape.
-                </p>
-              </div>
-              <div class="card-footer">
-                <label style="transform: translate(10px, 20px); color: #0e6e94"
-                  >{{
-                    investigator.researches["parameters"]["manuscriptDrafting"]
-                  }}%</label
-                >
-                <input
-                  type="range"
-                  min="0"
-                  [max]="research.commonParameters['manuscriptDrafting']"
-                  [(ngModel)]="
-                    investigator.researches['parameters']['manuscriptDrafting']
-                  "
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-12">
-            <div class="card border-primary">
-              <div class="card-body height">
-                <div class="closed" *ngIf="!research.commonParameters['fund']">
-                  CLOSED
-                </div>
-                <h5
-                  class="card-title"
-                  [ngClass]="{
-                    'mt-1': research.commonParameters['fund'],
-                    'mt-n2': !research.commonParameters['fund']
-                  }"
-                >
-                  Fund
-                </h5>
-                <p class="card-text">Money saved for a particular purpose.</p>
-              </div>
-              <div class="card-footer">
-                <label style="transform: translate(10px, 20px); color: #0e6e94">
-                  {{ investigator.researches["parameters"]["fund"] }}%
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  [max]="research.commonParameters['fund']"
-                  [(ngModel)]="investigator.researches['parameters']['fund']"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -230,8 +160,8 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Group Hiring</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-1">Group Hiring</h5>
+                <p class="card-text textPadding">
                   Teaming of people tasked with filling a vacant position(s).
                 </p>
               </div>
@@ -260,7 +190,80 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
+            <div class="card border-primary">
+              <div class="card-body height">
+                <div
+                  class="closed"
+                  *ngIf="!research.commonParameters['manuscriptDrafting']"
+                >
+                  CLOSED
+                </div>
+                <h5
+                  class="titlePadding card-title"
+                  [ngClass]="{
+                    'mt-1': research.commonParameters['manuscriptDrafting'],
+                    'mt-n2': !research.commonParameters['manuscriptDrafting']
+                  }"
+                >
+                  Manuscript Drafting
+                </h5>
+                <p class="card-text textPadding">
+                  Preliminary status of the manuscript in which the write up is
+                  yet to be put in shape.
+                </p>
+              </div>
+              <div class="card-footer">
+                <label style="transform: translate(10px, 20px); color: #0e6e94"
+                  >{{
+                    investigator.researches["parameters"]["manuscriptDrafting"]
+                  }}%</label
+                >
+                <input
+                  type="range"
+                  min="0"
+                  [max]="research.commonParameters['manuscriptDrafting']"
+                  [(ngModel)]="
+                    investigator.researches['parameters']['manuscriptDrafting']
+                  "
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-12">
+            <div class="card border-primary">
+              <div class="card-body height">
+                <div class="closed" *ngIf="!research.commonParameters['fund']">
+                  CLOSED
+                </div>
+                <h5
+                  class="titlePadding card-title"
+                  [ngClass]="{
+                    'mt-1': research.commonParameters['fund'],
+                    'mt-n2': !research.commonParameters['fund']
+                  }"
+                >
+                  Fund
+                </h5>
+                <p class="card-text textPadding">
+                  Money saved for a particular purpose.
+                </p>
+              </div>
+              <div class="card-footer">
+                <label style="transform: translate(10px, 20px); color: #0e6e94">
+                  {{ investigator.researches["parameters"]["fund"] }}%
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  [max]="research.commonParameters['fund']"
+                  [(ngModel)]="investigator.researches['parameters']['fund']"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -270,7 +273,7 @@
                   CLOSED
                 </div>
                 <h5
-                  class="card-title"
+                  class="titlePadding card-title"
                   [ngClass]="{
                     'mt-1': research.commonParameters['dataCollection'],
                     'mt-n2': !research.commonParameters['dataCollection']
@@ -278,7 +281,7 @@
                 >
                   Data Collection
                 </h5>
-                <p class="card-text">
+                <p class="card-text textPadding">
                   Gathering and measuring information on targeted variables in
                   an established system, which then enables one to answer
                   relevant questions and evaluate outcomes.
@@ -301,7 +304,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -313,8 +316,8 @@
                     research.commonParameters["studyPlan"] ? "MUST" : "CLOSED"
                   }}
                 </div>
-                <h5 class="card-title mt-n2">Study Plan</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-n2">Study Plan</h5>
+                <p class="card-text textPadding">
                   Schedules that designate studying times and learning
                   objectives for specific project.
                 </p>
@@ -336,7 +339,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -352,8 +355,10 @@
                       : "CLOSED"
                   }}
                 </div>
-                <h5 class="card-title mt-n2">Responsibility</h5>
-                <p class="card-text">The state of being accountable</p>
+                <h5 class="titlePadding card-title mt-n2">Responsibility</h5>
+                <p class="card-text textPadding">
+                  The state of being accountable
+                </p>
               </div>
               <div class="card-footer">
                 <label style="transform: translate(10px, 20px); color: #0e6e94"
@@ -372,38 +377,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
-            <div
-              class="card"
-              [ngClass]="{
-                'border-danger': !investigator.researches['parameters']['idea'],
-                'border-success': investigator.researches['parameters']['idea']
-              }"
-            >
-              <div class="card-body height">
-                <h5 class="card-title mt-1">Idea</h5>
-                <p class="card-text">Thought of solution, plan or invention.</p>
-              </div>
-              <div class="card-footer">
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="investigator.researches['parameters']['idea']"
-                    (click)="check('idea')"
-                  />
-                  <span class="slider round">
-                    <label
-                      *ngIf="investigator.researches['parameters']['idea']"
-                    ></label>
-                    <label
-                      *ngIf="!investigator.researches['parameters']['idea']"
-                    ></label>
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-12">
+
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -419,8 +394,8 @@
                       : "CLOSED"
                   }}
                 </div>
-                <h5 class="card-title mt-n2">Manuscript review</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-n2">Manuscript review</h5>
+                <p class="card-text textPadding">
                   Understanding everything written for correction and
                   suggestions.
                 </p>
@@ -442,7 +417,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -454,8 +429,8 @@
                     research.commonParameters["revising"] ? "MUST" : "CLOSED"
                   }}
                 </div>
-                <h5 class="card-title mt-n2">Revising</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-n2">Revising</h5>
+                <p class="card-text textPadding">
                   Rewriting for corrections or explanation.
                 </p>
               </div>
@@ -476,7 +451,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div class="card border-primary">
               <div class="card-body height">
                 <div
@@ -486,7 +461,7 @@
                   CLOSED
                 </div>
                 <h5
-                  class="card-title"
+                  class="titlePadding card-title"
                   [ngClass]="{
                     'mt-1': research.commonParameters['citation'],
                     'mt-n2': !research.commonParameters['citation']
@@ -494,7 +469,7 @@
                 >
                   Citation
                 </h5>
-                <p class="card-text">Scholar quotation.</p>
+                <p class="card-text textPadding">Scholar quotation.</p>
               </div>
               <div class="card-footer">
                 <label style="transform: translate(10px, 20px); color: #0e6e94"
@@ -513,14 +488,47 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
+            <div
+              class="card"
+              [ngClass]="{
+                'border-danger': !investigator.researches['parameters']['idea'],
+                'border-success': investigator.researches['parameters']['idea']
+              }"
+            >
+              <div class="card-body height">
+                <h5 class="titlePadding card-title mt-1">Idea</h5>
+                <p class="card-text textPadding">
+                  Thought of solution, plan or invention.
+                </p>
+              </div>
+              <div class="card-footer">
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="investigator.researches['parameters']['idea']"
+                    (click)="check('idea')"
+                  />
+                  <span class="slider round">
+                    <label
+                      *ngIf="investigator.researches['parameters']['idea']"
+                    ></label>
+                    <label
+                      *ngIf="!investigator.researches['parameters']['idea']"
+                    ></label>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-12">
             <div class="card">
               <div class="card-body height">
                 <div class="one-contibuter">
                   {{ research.commonParameters["irb"] ? "DONE" : "OPEN" }}
                 </div>
-                <h5 class="card-title mt-n2">IRB</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-n2">IRB</h5>
+                <p class="card-text textPadding">
                   Institutional review board (IRB): Committee for independent
                   ethical approval in the same place.
                 </p>
@@ -545,7 +553,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -556,8 +564,8 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Data Analysis</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-1">Data Analysis</h5>
+                <p class="card-text textPadding">
                   A process of inspecting, cleansing, transforming, and modeling
                   information.
                 </p>
@@ -587,7 +595,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -598,8 +606,8 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Inquiry</h5>
-                <p class="card-text">
+                <h5 class="titlePadding card-title mt-1">Inquiry</h5>
+                <p class="card-text textPadding">
                   Asking for information for augmenting knowledge, resolving
                   doubt, or solving a problem.
                 </p>
@@ -625,7 +633,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12">
+          <div class="col-sm-6 col-12">
             <div
               class="card"
               [ngClass]="{
@@ -636,8 +644,10 @@
               }"
             >
               <div class="card-body height">
-                <h5 class="card-title mt-1">Presentation</h5>
-                <p class="card-text">Showing an outcome in conferences.</p>
+                <h5 class="titlePadding card-title mt-1">Presentation</h5>
+                <p class="card-text textPadding">
+                  Showing an outcome in conferences.
+                </p>
               </div>
               <div class="card-footer">
                 <label class="switch">
