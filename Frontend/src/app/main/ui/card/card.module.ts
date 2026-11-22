@@ -15,7 +15,7 @@ import { CardStatisticsModule } from "app/main/ui/card/card-statistics/card-stat
     CardAnalyticsModule,
     CardBasicModule,
     CardAdvanceModule,
-    CoreSidebarModule,
+    CoreSidebarModule
   ],
   providers: [],
 })

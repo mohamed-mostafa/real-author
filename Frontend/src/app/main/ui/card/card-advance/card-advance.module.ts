@@ -11,6 +11,8 @@ import { ContentHeaderModule } from "app/layout/components/content-header/conten
 
 import { CardAdvanceService } from "app/main/ui/card/card-advance/card-advance.service";
 import { CardAdvanceComponent } from "app/main/ui/card/card-advance/card-advance.component";
+import { InvestigatorThumbnailComponent } from "app/research/investigator-thumbnail/investigator-thumbnail.component";
+import { InvestigatorThumbnailSummaryComponent } from './investigator-thumbnail-summary/investigator-thumbnail-summary.component';
 
 // routing
 const routes: Routes = [
@@ -25,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [CardAdvanceComponent],
+  declarations: [CardAdvanceComponent, InvestigatorThumbnailSummaryComponent],
   imports: [
     RouterModule.forChild(routes),
     ContentHeaderModule,

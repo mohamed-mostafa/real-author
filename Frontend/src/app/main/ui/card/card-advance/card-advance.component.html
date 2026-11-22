@@ -81,20 +81,7 @@
                     else elseTemplate
                   "
                 >
-                  <div
-                    *ngFor="let invest of item.investigators"
-                    placement="bottom"
-                    container="body"
-                    ngbTooltip="Investigator"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="assets/images/portrait/small/default.jpg"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
+                  <app-investigator-thumbnail-summary *ngFor="let invest of item.investigators" [data]="invest"></app-investigator-thumbnail-summary>
                 </ng-container>
                 <ng-template #elseTemplate>
                   No Investigators Found

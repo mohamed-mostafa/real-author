@@ -180,7 +180,7 @@
                     ></span>
                   </button>
                   <div ngbDropdownMenu>
-                    <a
+                    <!-- <a
                       routerLink="/apps/user/user-view/{{ row.id }}"
                       ngbDropdownItem
                       ><span
@@ -189,7 +189,7 @@
                         [class]="'mr-50'"
                       ></span>
                       Details</a
-                    >
+                    > -->
                     <a
                       *ngIf="userRole === 'Admin'"
                       (click)="modalOpenForm(modalForm, row)"

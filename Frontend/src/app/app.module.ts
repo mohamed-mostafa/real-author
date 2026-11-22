@@ -40,6 +40,7 @@ import { ResearchGeneralComponent } from "./research/research-general/research-g
 import { InvestigatorParametersComponent } from "./research/investigator-parameters/investigator-parameters.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { HistoryComponent } from './history/history.component';
+import { InvestigatorThumbnailComponent } from './research/investigator-thumbnail/investigator-thumbnail.component';
 
 const appRoutes: Routes = [
   {
@@ -132,6 +133,7 @@ const appRoutes: Routes = [
     InvestigatorParametersComponent,
     UserProfileComponent,
     HistoryComponent,
+    InvestigatorThumbnailComponent,
   ],
   imports: [
     BrowserModule,
